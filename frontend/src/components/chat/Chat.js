@@ -29,9 +29,11 @@ const Chat = () => {
         (messageA, messageB) => new Date(messageA.createdAt) - new Date(messageB.createdAt)
     );
 
-    const toggleChat = () => setIsOpen(!isOpen);
+    const toggleChat = () => {
+        setIsOpen(!isOpen);
+        setSelectedUser(null);
+    };
 
-    // INIT
     useEffect(() => {
         if (token) {
             dispatch(getAllUsers(token));
@@ -39,7 +41,6 @@ const Chat = () => {
         }
     }, [token, dispatch]);
 
-    // OPEN CONVERSATION
     useEffect(() => {
         if (!selectedUser || !token) return;
 
@@ -63,7 +64,6 @@ const Chat = () => {
         })();
     }, [selectedUser, token, dispatch]);
 
-    // SCROLL TO BOTTOM ONLY WHEN NEW MESSAGE
     useEffect(() => {
         if (page === 1) {
             messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });

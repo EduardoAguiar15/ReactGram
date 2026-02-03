@@ -9,6 +9,7 @@ import { profile, resetMessage, updateProfile } from "../../slices/userSlice";
 
 // Components
 import Message from '../../components/feedback/Message';
+import EmojiInput from "../../components/post/EmojiInput";
 
 const EditProfile = () => {
     const dispatch = useDispatch()
@@ -115,7 +116,15 @@ const EditProfile = () => {
                     </label>
                     <label>
                         <span>Bio:</span>
-                        <input type="text" placeholder="Descrição do perfil" onChange={(e) => setBio(e.target.value)} value={bio || ""} />
+                        <EmojiInput
+                            placeholder="Descrição do perfil"
+                            inputClassName="w-full"
+                            pickerWidth={340}
+                            pickerHeight={150}
+                            value={bio || ""}
+                            onChange={(newValue) => setBio(newValue)}
+                            pickerPositionClass="right-1/2 translate-x-[77%] top-14"
+                        />
                     </label>
                     <label>
                         <span>Quer alterar sua senha?</span>
