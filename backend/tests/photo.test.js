@@ -206,7 +206,7 @@ describe("Photo Controller", () => {
         expect(res.body[1].title).toBe("Primeira foto");
 
         res.body.forEach(photo => {
-            expect(photo.userId).toBe(String(user._id));
+            expect(photo.userId._id).toBe(String(user._id));
         });
     });
 

@@ -4,6 +4,7 @@ import { uploads } from "../../utils/config";
 import Message from "../../components/feedback/Message";
 import { Link } from "react-router-dom";
 import { BsFillEyeFill, BsPencilFill, BsXLg } from "react-icons/bs";
+import EmojiInput from "../../components/post/EmojiInput";
 
 // hooks
 import { useState, useEffect, useRef } from "react";
@@ -106,6 +107,7 @@ const Profile = () => {
 
     const handleCancelEdit = () => {
         toggleEditForm();
+        dispatch(resetMessage());
     };
 
     if (loading) {
@@ -130,7 +132,7 @@ const Profile = () => {
                 </div>
             )}
 
-            <div className="w-1/2 mx-auto" id="profile">
+            <div className="w-7/12 mx-auto" id="profile">
                 <div className="flex items-center flex-wrap p-4 border-b border-[#363636]">
                     {user && user.profileImage && (
                         <img className="w-[120px] h-[120px] rounded-full mr-8 object-cover cursor-pointer" src={`${uploads}/users/${user.profileImage}`} alt={user.name} onClick={() => setZoomImage(`${uploads}/users/${user.profileImage}`)} />
@@ -147,7 +149,15 @@ const Profile = () => {
                             <form onSubmit={submitHandle}>
                                 <label>
                                     <span>Título para a foto:</span>
-                                    <input type="text" placeholder="Insira um título" onChange={(e) => setTitle(e.target.value)} value={title || ""} />
+                                    <EmojiInput
+                                        placeholder="Insira um título"
+                                        inputClassName="w-full"
+                                        pickerWidth={500}
+                                        pickerHeight={280}
+                                        value={title || ""}
+                                        onChange={(value) => setTitle(value)}
+                                        pickerPositionClass="right-1/2 translate-x-[82%] top-full m-0"
+                                    />
                                 </label>
                                 <label>
                                     <span>Imagem:</span>
@@ -158,14 +168,22 @@ const Profile = () => {
                             </form>
                         </div>
                         <div className={`mb-4 ${isEditing ? 'block' : 'hidden'}`} ref={editPhotoForm}>
-                            <p>Editando:</p>
+                            <p className="my-2 text-xl">Editando:</p>
                             {editImage && (
                                 <img className="w-full mb-4" src={`${uploads}/photos/${editImage}`} alt={editTitle} />
                             )}
                             <form onSubmit={handleUpdate}>
-                                <input type="text" placeholder="Insira o novo título" onChange={(e) => setEditTitle(e.target.value)} value={editTitle || ""} />
+                                <EmojiInput
+                                    placeholder="Insira o novo título"
+                                    inputClassName="w-full"
+                                    pickerWidth={500}
+                                    pickerHeight={280}
+                                    value={editTitle || ""}
+                                    onChange={(newValue) => setEditTitle(newValue)}
+                                    pickerPositionClass="right-1/2 translate-x-[85%] bottom-14"
+                                />
                                 <input type="submit" value="Atualizar" />
-                                <button className="cancel-btn" onClick={handleCancelEdit}>Cancelar edição</button>
+                                <button type="button" className="cancel-btn" onClick={handleCancelEdit}>Cancelar edição</button>
                             </form>
                         </div>
                         {errorPhoto && <Message msg={errorPhoto} type="error" />}
@@ -175,10 +193,10 @@ const Profile = () => {
                 <div className="user-photos">
                     <h2 className="mt-5 mb-7 mr-0 ml-0">Fotos publicadas:</h2>
                     <div className="photos-container">
-                        <div className="flex flex-row w-full flex-wrap justify-start ">
+                        <div className="flex flex-row w-full flex-wrap justify-center ">
                             {Array.isArray(photos) && photos.map((photo) => (
-                                <div className="flex flex-col justify-center w-[32%] m-[0.5%]" key={photo?._id}>
-                                    {photo.image && (<img className="flex justify-center w-[99%] h-[320px] object-cover rounded-[3px]" src={`${uploads}/photos/${photo.image}`} alt={photo.title} />)}
+                                <div className="flex flex-col justify-center w-[33%] m-[0.1%]" key={photo?._id}>
+                                    {photo.image && (<img className="flex justify-center w-[99%] h-[370px] object-cover rounded-[3px]" src={`${uploads}/photos/${photo.image}`} alt={photo.title} />)}
                                     {userAuth && id === userAuth._id ? (
                                         <div className="flex justify-around p-[10px]">
                                             <Link to={`/photos/${photo._id}`}>

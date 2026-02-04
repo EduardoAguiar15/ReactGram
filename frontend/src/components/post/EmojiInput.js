@@ -16,6 +16,7 @@ const EmojiInput = ({
 }) => {
   const [open, setOpen] = useState(false);
   const pickerRef = useRef(null);
+  const buttonRef = useRef(null);
 
   const handleEmojiClick = (emojiData) => {
     onChange(value + emojiData.emoji);
@@ -26,14 +27,13 @@ const EmojiInput = ({
     if (!open) return;
 
     const handleClickOutside = (e) => {
-      if (!pickerRef.current?.contains(e.target)) {
+      if (!pickerRef.current?.contains(e.target) && !buttonRef.current?.contains(e.target)) {
         setOpen(false);
       }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () =>
-      document.removeEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [open]);
 
   return (
@@ -49,9 +49,10 @@ const EmojiInput = ({
       />
 
       <button
+        ref={buttonRef}
         aria-label="Selecionar emoji"
         type="button"
-        onClick={() => setOpen(o => !o)}
+        onClick={() => setOpen((prev) => !prev)}
         className={`emoji-button absolute right-2 top-[42%] -translate-y-1/2 text-2xl bg-transparent ${buttonClassName}`}
       >
         😊
