@@ -9,7 +9,7 @@ const {
 
 const register = async ({ name, email, password }) => {
     const userExists = await User.findOne({ email: new RegExp(`^${email}$`, "i") });
-    
+
     if (userExists) {
         throw new UnprocessableEntityError("Por favor, utilize outro e-mail");
     }
@@ -29,6 +29,25 @@ const register = async ({ name, email, password }) => {
         profileImage: newUser.profileImage || "",
         token
     };
+}
+
+async function getCurrentUser(userId) {
+    try {
+        const user = await User
+            .findById(userId)
+            .select("-password");
+
+        if (!user) {
+            throw new UserNotFoundError();
+        }
+
+        return user;
+    } catch (error) {
+        if (error.name === "CastError") {
+            throw new UserNotFoundError();
+        }
+        throw error;
+    }
 }
 
 const login = async ({ email, password }) => {
@@ -113,6 +132,7 @@ async function getAllUsers() {
 
 module.exports = {
     register,
+    getCurrentUser,
     login,
     update,
     getUserById,

@@ -1,4 +1,3 @@
-const User = require("../models/User");
 const UserService = require("../services/UserService");
 
 // REGISTER USER AND SIGN IN
@@ -35,8 +34,8 @@ const login = async (req, res) => {
 // GET CURRENT LOGGED IN USER
 const getCurrentUser = async (req, res) => {
     try {
-        const user = await User.findById(req.user._id).select("-password");
-        res.status(200).json(user);
+        const user = await UserService.getCurrentUser(req.user._id);
+        return res.status(200).json(user);
     } catch (error) {
         return res.status(error.status || 500).json({
             status: "error",
