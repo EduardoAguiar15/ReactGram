@@ -26,13 +26,13 @@ describe("photoService.publishPhoto", () => {
     it("deve retornar erro ao falhar na publicação", async () => {
         fetch.mockResolvedValueOnce({
             ok: false,
-            json: async () => ({ errors: ["Erro ao publicar foto"] }), // ⚡ importante
+            json: async () => ({ errors: ["Erro ao publicar foto de usuário"] }),
         });
 
         const result = await photoService.publishPhoto(mockData, mockToken);
 
         expect(fetch).toHaveBeenCalledTimes(1);
-        expect(result).toEqual({ errors: ["Erro ao publicar foto"] });
+        expect(result).toEqual({ errors: ["Erro ao publicar foto de usuário"] });
     });
 
     it("deve retornar erro ao lançar exceção", async () => {

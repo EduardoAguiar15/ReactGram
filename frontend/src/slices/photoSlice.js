@@ -179,11 +179,12 @@ export const photoSlice = createSlice({
                 state.loading = false;
                 state.success = true;
                 state.error = null;
-
-                state.photos.map((photo) => {
+                state.photos = state.photos.map((photo) => {
                     if (photo._id === action.payload.photo._id) {
-
-                        return photo.title = action.payload.photo.title
+                        return {
+                            ...photo,
+                            title: action.payload.photo.title
+                        };
                     }
                     return photo;
                 });
@@ -255,7 +256,7 @@ export const photoSlice = createSlice({
                         : [...state.photo.likes, userId];
                 }
 
-                                                                                                                                
+
                 state.photos = state.photos.map((photo) => {
                     if (photo._id === photoId) {
                         const alreadyLiked = photo.likes.includes(userId);

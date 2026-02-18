@@ -103,7 +103,13 @@ const EditProfile = () => {
                                 previewImage ? URL.createObjectURL(previewImage) : `${uploads}/users/${user.profileImage}`
                             }
                             alt={user.name}
-                            onClick={() => setZoomImage(`${uploads}/users/${user.profileImage}`)}
+                            onClick={() =>
+                                setZoomImage(
+                                    previewImage
+                                        ? URL.createObjectURL(previewImage)
+                                        : `${uploads}/users/${user.profileImage}`
+                                )
+                            }
                         />
                     </div>
                 )}
