@@ -7,13 +7,13 @@ const publishPhoto = async (data, token) => {
 
     try {
         const response = await fetch(`${api}/photos/insert`, config);
+        const res = await response.json();
 
         if (!response.ok) {
-            throw new Error("Erro ao publicar foto de usuário");
+            return { errors: res.details || [res.message || "Erro ao publicar foto de usuário"] };
         }
 
-        const data = await response.json();
-        return data;
+        return res;
     }
     catch (error) {
         console.error("Erro ao publicar foto:", error);
@@ -27,13 +27,13 @@ const getUserPhotos = async (id, token) => {
 
     try {
         const response = await fetch(`${api}/photos/user/${id}`, config);
+        const res = await response.json();
 
         if (!response.ok) {
-            throw new Error("Erro ao buscar fotos de usuário");
+            return { errors: res.details || [res.message || "Erro ao buscar fotos do usuário"] };
         }
 
-        const data = await response.json();
-        return data;
+        return res;
     } catch (error) {
         console.error("Erro ao buscar fotos do usuário:", error);
         return { errors: ["Erro ao buscar fotos do usuário"] };
@@ -47,13 +47,13 @@ const deletePhoto = async (id, token) => {
 
     try {
         const response = await fetch(`${api}/photos/${id}`, config);
+        const res = await response.json();
 
         if (!response.ok) {
-            throw new Error("Erro ao deletar foto de usuário");
+            return { errors: res.details || [res.message || "Erro ao deletar foto de usuário"] };
         }
 
-        const data = await response.json();
-        return data;
+        return res;
     } catch (error) {
         console.error("Erro ao deletar foto:", error);
         return { errors: ["Erro ao deletar foto"] };
@@ -67,14 +67,13 @@ const updatePhoto = async (data, id, token) => {
     try {
 
         const response = await fetch(`${api}/photos/${id}`, config)
+        const res = await response.json();
 
         if (!response.ok) {
-            throw new Error("Erro ao atualizar foto de usuário");
+            return { errors: res.details || [res.message || "Erro ao atualizar foto de usuário"] };
         }
 
-        const data = await response.json();
-
-        return data;
+        return res;
     } catch (error) {
         console.error("Erro ao atualizar foto:", error);
         return { errors: ["Erro ao atualizar foto"] };
@@ -88,14 +87,13 @@ const getPhoto = async (id, token) => {
     try {
 
         const response = await fetch(`${api}/photos/${id}`, config);
+        const res = await response.json();
 
         if (!response.ok) {
-            throw new Error("Erro ao buscar foto de usuário");
+            return { errors: res.details || [res.message || "Erro ao buscar foto de usuário"] };
         }
 
-        const data = await response.json();
-
-        return data;
+        return res;
     } catch (error) {
         console.error("Erro ao buscar foto por id:", error);
         return { errors: ["Erro ao buscar foto por id"] };
@@ -109,13 +107,13 @@ const like = async (id, token) => {
 
     try {
         const response = await fetch(`${api}/photos/${id}/like/`, config)
+        const res = await response.json();
 
         if (!response.ok) {
-            throw new Error("Erro ao curtir foto de usuário");
+            return { errors: res.details || [res.message || "Erro ao curtir foto de usuário"] };
         }
 
-        const data = await response.json();
-        return data;
+        return res;
     } catch (error) {
         console.error("Erro ao curtir foto:", error);
         return { errors: ["Erro ao curtir foto"] };
@@ -128,13 +126,13 @@ const getPhotos = async (token) => {
 
     try {
         const response = await fetch(`${api}/photos/`, config);
+        const res = await response.json();
 
         if (!response.ok) {
-            throw new Error("Erro ao buscar fotos");
+            return { errors: res.details || [res.message || "Erro ao buscar fotos"] };
         }
 
-        const data = await response.json();
-        return data;
+        return res;
 
     } catch (error) {
         console.error("Erro no getPhotos:", error);
@@ -150,13 +148,13 @@ const searchPhotos = async (Query, token) => {
 
     try {
         const response = await fetch(`${api}/photos/search?q=${Query}`, config);
+        const res = await response.json();
 
         if (!response.ok) {
-            throw new Error("Erro ao buscar foto");
+            return { errors: res.details || [res.message || "Erro ao buscar fotos"] };
         }
 
-        const data = await response.json();
-        return data;
+        return res;
     } catch (error) {
         console.error("Erro ao buscar fotos:", error);
         return { errors: ["Erro ao buscar fotos"] };
