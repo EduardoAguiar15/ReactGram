@@ -193,7 +193,7 @@ const Profile = () => {
                 <div className="user-photos">
                     <h2 className="mt-5 mb-7 mr-0 ml-0">Fotos publicadas:</h2>
                     <div className="photos-container">
-                        <div className="flex flex-row w-full flex-wrap justify-center ">
+                        <div className="flex flex-row w-full flex-wrap justify-start">
                             {Array.isArray(photos) && photos.map((photo) => (
                                 <div className="flex flex-col justify-center w-[33%] m-[0.1%]" key={photo?._id}>
                                     {photo.image && (<img className="flex justify-center w-[99%] h-[370px] object-cover rounded-[3px]" src={`${uploads}/photos/${photo.image}`} alt={photo.title} />)}

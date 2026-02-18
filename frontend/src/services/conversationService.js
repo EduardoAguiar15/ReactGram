@@ -4,31 +4,30 @@ export const getUserConversations = async (token) => {
   const config = requestConfig("GET", null, token);
   try {
     const response = await fetch(`${api}/conversations`, config);
+    const res = await response.json();
 
     if (!response.ok) {
-      throw new Error("Erro ao buscar conversas do usuário");
+      return { errors: res.details || [res.message || "Erro ao buscar conversas do usuário"] };
     }
-    const data = await response.json();
-    return data;
+
+    return res;
   } catch (error) {
     console.error("Erro ao buscar conversas do usuário:", error);
     return { errors: ["Erro ao buscar conversas do usuário"] };
   }
 };
 
-// Busca a conversa entre o usuário atual e outro usuário
 export const getConversationBetween = async (token, userId) => {
   const config = requestConfig("GET", null, token);
   try {
     const response = await fetch(`${api}/conversations/${userId}`, config);
+    const res = await response.json();
 
     if (!response.ok) {
-      throw new Error("Erro ao buscar conversa entre usuários");
+      return { errors: res.details || [res.message || "Erro ao buscar conversa entre usuários"] };
     }
 
-    const data = await response.json();
-    // data pode ser null se não existir conversa ainda
-    return data;
+    return res;
   } catch (error) {
     console.error("Erro ao buscar conversa entre usuários:", error);
     return { errors: ["Erro ao buscar conversas do usuário"] };
