@@ -1,7 +1,9 @@
 class AppError extends Error {
-    constructor(message, status) {
-        super(message);
+    constructor(userMessage, status = 500, details) {
+        super(userMessage);
         this.status = status;
+        this.userMessage = userMessage;
+        this.details = details || [userMessage];
     }
 }
 
@@ -42,8 +44,8 @@ class CommentNotFoundError extends AppError {
 }
 
 class UnprocessableEntityError extends AppError {
-    constructor() {
-        super("Dados inválidos ou incompletos.", 422);
+    constructor(message = "Dados inválidos ou incompletos.") {
+        super(message, 422);
     }
 }
 

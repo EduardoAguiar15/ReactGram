@@ -45,7 +45,6 @@ describe("Photo Controller", () => {
     }
 
 
-    // PUBLICAR FOTO
     it("deve publicar uma foto com sucesso", async () => {
         const { token } = await createUserAndLogin({
             email: "carlos@test.com"
@@ -61,7 +60,6 @@ describe("Photo Controller", () => {
     });
 
 
-    // FALHA AO PUBLICAR FOTO SEM TÍTULO
     it("não deve permitir publicar foto sem título", async () => {
         const { token } = await createUserAndLogin({
             email: "carlos@test.com"
@@ -70,12 +68,11 @@ describe("Photo Controller", () => {
         const res = await insertPhoto(token, "");
 
         expect(res.status).toBe(422);
-        expect(res.body.errors[0]).toMatch(/O Título precisa ter no mínimo 3 caracteres/i);
+        expect(res.body.details[0]).toMatch(/O Título precisa ter no mínimo 3 caracteres/i);
 
     });
 
 
-    // FALHA AO PUBLICAR FOTO SEM IMAGEM
     it("não deve permitir publicar foto sem imagem", async () => {
         const { token } = await createUserAndLogin({
             email: "noimage@test.com"
@@ -87,11 +84,10 @@ describe("Photo Controller", () => {
             .field("title", "Foto sem imagem");
 
         expect(res.status).toBe(422);
-        expect(res.body.errors).toContain("A imagem é obrigatória.");
+        expect(res.body.details[0]).toContain("A imagem é obrigatória.");
     });
 
 
-    // FALHA AO PUBLICAR FOTO SEM ESTAR AUTENTICADO
     it("não deve permitir publicar foto sem estar autenticado", async () => {
         const res = await request(app)
             .post("/api/photos/insert")
@@ -102,7 +98,6 @@ describe("Photo Controller", () => {
     });
 
 
-    // ATUALIZAR FOTO
     it("deve atualizar photo com sucesso", async () => {
         const { token } = await createUserAndLogin({
             email: "update@test.com",
@@ -131,7 +126,6 @@ describe("Photo Controller", () => {
     });
 
 
-    // FALHA AO ATUALIZAR FOTO DE OUTRO USUÁRIO
     it("não deve permitir atualizar foto de outro usuário", async () => {
         const { token: token1 } = await createUserAndLogin({
             email: "usuario1@test.com",
@@ -154,12 +148,11 @@ describe("Photo Controller", () => {
 
         expect(res.status).toBe(403);
         expect(res.body.status).toBe("error");
-        expect(res.body.message).toBe("Erro ao atualizar foto");
+        expect(res.body.message).toBe("Você não tem permissão para realizar esta ação.");
 
     });
 
 
-    // FALHA AO ATUALIZAR FOTO SEM ESTAR AUTENTICADO
     it("não deve permitir atualizar foto sem estar autenticado", async () => {
         const { token } = await createUserAndLogin({
             email: "teste@test.com"
@@ -180,7 +173,6 @@ describe("Photo Controller", () => {
     });
 
 
-    // LISTAR FOTOS DE UM USUÁRIO
     it("deve retornar todas as fotos de um usuário", async () => {
         const { user, token } = await createUserAndLogin({
             email: "teste@test.com"
@@ -211,7 +203,6 @@ describe("Photo Controller", () => {
     });
 
 
-    // BUSCAR FOTO POR ID
     it("deve buscar foto por ID com sucesso", async () => {
         await User.create({
             name: "Carlos Busca",
@@ -243,7 +234,6 @@ describe("Photo Controller", () => {
     });
 
 
-    // BUSCAR FOTO COM ID INVÁLIDO
     it("não deve permitir buscar foto com ID inválido", async () => {
         const { token } = await createUserAndLogin({
             email: "teste@test.com"
@@ -255,11 +245,10 @@ describe("Photo Controller", () => {
 
         expect(res.status).toBe(400);
         expect(res.body.status).toBe("error");
-        expect(res.body.message).toBe("Erro ao buscar foto");
+        expect(res.body.message).toBe("ID inválido.");
     });
 
 
-    // DELETAR FOTO
     it("deve deletar uma foto com sucesso", async () => {
         const { token } = await createUserAndLogin({
             email: "teste@test.com"
@@ -280,7 +269,7 @@ describe("Photo Controller", () => {
         expect(photoDb).toBeNull();
     });
 
-    // FALHA AO DELETAR FOTO INEXISTENTE
+
     it("não deve permitir deletar foto inexistente", async () => {
         const { token } = await createUserAndLogin({
             email: "teste@test.com"
@@ -294,11 +283,10 @@ describe("Photo Controller", () => {
 
         expect(res.status).toBe(404);
         expect(res.body.status).toBe("error");
-        expect(res.body.message).toBe("Erro ao deletar foto");
+        expect(res.body.message).toBe("Foto não encontrada.");
     });
 
 
-    // FALHA AO DELETAR FOTO SEM ESTAR AUTENTICADO
     it("não deve permitir deletar foto sem estar autenticado", async () => {
         const { token } = await createUserAndLogin({
             email: "teste@test.com"
@@ -318,7 +306,6 @@ describe("Photo Controller", () => {
     });
 
 
-    // TESTE PARA LIKEPHOTO
     it("deve permitir curtir e descurtir uma foto", async () => {
         const { user, token } = await createUserAndLogin({
             email: "teste@test.com"
@@ -354,7 +341,6 @@ describe("Photo Controller", () => {
     });
 
 
-    // FALHA AO CURTIR FOTO SEM ESTAR AUTENTICADO
     it("não deve permitir curtir foto sem estar autenticado", async () => {
         const { token } = await createUserAndLogin({
             email: "teste@test.com"

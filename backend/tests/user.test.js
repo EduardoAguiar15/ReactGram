@@ -4,7 +4,7 @@ const User = require("../models/User");
 
 describe("User Controller", () => {
 
-    // REGISTRO DE USUÁRIO
+
     it("deve registrar um usuário com sucesso", async () => {
         const res = await request(app)
             .post("/api/users/register")
@@ -25,7 +25,6 @@ describe("User Controller", () => {
     });
 
 
-    // FALHA NO REGISTRO DE USUÁRIO
     it("não deve registrar usuário se email já estiver cadastrado", async () => {
         await User.create({
             name: "Carlos Teste 2",
@@ -46,7 +45,6 @@ describe("User Controller", () => {
     });
 
 
-    // LOGIN DE USUÁRIO
     it("deve fazer login com sucesso", async () => {
         const user = await User.create({
             name: "Carlos Teste3",
@@ -70,7 +68,6 @@ describe("User Controller", () => {
     });
 
 
-    // LOGIN FALHO
     it("não deve logar com senha incorreta", async () => {
         await User.create({
             name: "Usuário Erro",
@@ -89,7 +86,6 @@ describe("User Controller", () => {
     });
 
 
-    // ATUALIZAR USUÁRIO
     it("deve atualizar o usuário com sucesso", async () => {
         const user = await User.create({
             name: "Carlos Original",
@@ -126,7 +122,6 @@ describe("User Controller", () => {
     });
 
 
-    // FALHA AO ATUALIZAR USUÁRIO SEM TOKEN
     it("não deve atualizar o usuário sem token", async () => {
         await User.create({
             name: "Carlos Original2",
@@ -154,7 +149,6 @@ describe("User Controller", () => {
     });
 
 
-    // OBTER USUÁRIO POR ID
     it("deve retornar um usuário pelo ID", async () => {
         const user = await User.create({
             name: "Buscar Usuário",
@@ -171,7 +165,6 @@ describe("User Controller", () => {
     });
 
 
-    // FALHA AO OBTER USUÁRIO COM ID INVÁLIDO
     it("deve retornar erro ao buscar usuário com ID inválido", async () => {
         await User.create({
             name: "Buscar Usuário",
@@ -186,7 +179,6 @@ describe("User Controller", () => {
     });
 
 
-    // OBTER TODOS OS USUÁRIOS
     it("deve retornar todos os usuários", async () => {
         await User.create({
             name: "User 1",

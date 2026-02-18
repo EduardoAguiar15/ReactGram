@@ -33,7 +33,7 @@ describe("Comment Controller", () => {
         return res.body;
     }
 
-    // CRIAR COMENTÁRIO
+
     it("deve criar um comentário com sucesso", async () => {
         const token = await createUserAndLogin("comment@test.com");
         const photo = await insertPhoto(token);
@@ -52,7 +52,7 @@ describe("Comment Controller", () => {
         expect(comments[0].comment).toBe("Comentário teste");
     });
 
-    // FALHA AO COMENTAR FOTO INEXISTENTE
+
     it("não deve permitir comentar uma foto que não existe", async () => {
         const token = await createUserAndLogin("photofail@test.com");
 
@@ -64,18 +64,18 @@ describe("Comment Controller", () => {
             .send({ comment: "Comentário inválido" });
 
         expect(res.status).toBe(404);
-        expect(res.body.message).toBe("Erro ao criar comentário");
+        expect(res.body.message).toBe("Foto não encontrada.");
 
         const comments = await Comment.find({});
         expect(comments.length).toBe(0);
     });
 
-    // RESPONDER COMENTÁRIO
+
     it("deve responder um comentário", async () => {
         const token = await createUserAndLogin("reply@test.com");
         const photo = await insertPhoto(token);
 
-        const commentRes = await request(app)
+        await request(app)
             .post(`/api/comments/${photo._id}`)
             .set("authorization", `Bearer ${token}`)
             .send({ comment: "Comentário pai" });
@@ -98,7 +98,7 @@ describe("Comment Controller", () => {
         expect(updated.replies[0].comment).toBe("Resposta");
     });
 
-    // FALHA AO RESPONDER COMENTÁRIO INEXISTENTE
+
     it("não deve permitir responder um comentário que não existe", async () => {
         const token = await createUserAndLogin("notfound@test.com");
         const photo = await insertPhoto(token);
@@ -114,13 +114,13 @@ describe("Comment Controller", () => {
             });
 
         expect(res.status).toBe(404);
-        expect(res.body.message).toBe("Erro ao criar comentário");
+        expect(res.body.message).toBe("Comentário não encontrado.");
 
         const comments = await Comment.find({ photoId: photo._id });
         expect(comments.length).toBe(0);
     });
 
-    // FALHA AO CRIAR COMENTÁRIO VAZIO
+
     it("não deve permitir comentário vazio", async () => {
         const token = await createUserAndLogin("empty@test.com");
         const photo = await insertPhoto(token);
@@ -134,7 +134,7 @@ describe("Comment Controller", () => {
         expect(res.body.message).toBe("Erro ao criar comentário");
     });
 
-    // CURTIR COMENTÁRIO
+
     it("deve curtir e descurtir um comentário", async () => {
         const token = await createUserAndLogin("likecomment@test.com");
         const photo = await insertPhoto(token);
@@ -160,7 +160,7 @@ describe("Comment Controller", () => {
         expect(unlikeRes.body.liked).toBe(false);
     });
 
-    // BUSCAR COMENTÁRIOS
+
     it("deve buscar todos os comentários de uma foto", async () => {
 
         const token = await createUserAndLogin();
@@ -184,7 +184,7 @@ describe("Comment Controller", () => {
         expect(res.body.length).toBe(2);
     });
 
-    // BUSCAR TODOS OS COMENTÁRIOS DO SISTEMA
+
     it("deve buscar todos os comentários do sistema", async () => {
 
         const token = await createUserAndLogin();
