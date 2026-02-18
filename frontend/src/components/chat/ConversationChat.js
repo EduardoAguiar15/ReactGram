@@ -27,7 +27,7 @@ const ConversationChat = ({ conversations, allUsers, currentUser, setSelectedUse
                 </div>
             </div>
 
-            <div className="flex flex-col gap-7 transition-opacity duration-300 overflow-y-auto scrollbar scrollbar-thumb-scroll-thumb scrollbar-track-scroll-track mt-10">
+            <div className="flex flex-col gap-7 transition-opacity duration-300 h-[380px] overflow-y-auto scrollbar scrollbar-thumb-scroll-thumb scrollbar-track-scroll-track mt-10">
                 {[...chatList, ...remainingUsers].map(user => (
                     <div
                         key={user._id}

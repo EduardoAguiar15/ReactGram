@@ -15,6 +15,29 @@ const { getUserConversations, getConversationBetween } = require("../controllers
 
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     Conversation:
+ *       type: object
+ *       properties:
+ *         _id:
+ *           type: string
+ *         senderId:
+ *           type: object
+ *           description: Usuário remetente
+ *         receiverId:
+ *           type: object
+ *           description: Usuário destinatário
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ */
+
+/**
+ * @swagger
  * /conversations:
  *   get:
  *     summary: Retorna todos os relacionamentos de conversas do usuário autenticado
