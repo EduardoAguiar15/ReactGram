@@ -13,7 +13,7 @@ async function createUser(email) {
     });
 }
 
-// ENVIA MENSAGEM E CRIA CONVERSA SE NÃO EXISTIR
+
 it("deve criar mensagem e criar conversa quando não existir", async () => {
     const sender = await createUser("sender@test.com");
     const receiver = await createUser("receiver@test.com");
@@ -36,7 +36,7 @@ it("deve criar mensagem e criar conversa quando não existir", async () => {
     expect(conversation.lastMessage).toBe("Olá");
 });
 
-// ENVIA MENSAGEM USANDO CONVERSA EXISTENTE
+
 it("deve criar mensagem usando conversa existente", async () => {
     const sender = await createUser("sender2@test.com");
     const receiver = await createUser("receiver2@test.com");
@@ -60,7 +60,7 @@ it("deve criar mensagem usando conversa existente", async () => {
     expect(updatedConversation.lastMessage).toBe("Nova mensagem");
 });
 
-// FALHA AO ENVIAR MENSAGEM SE O ID DO RECEBEDOR FOR INVÁLIDO
+
 it("deve lançar erro se receiverId for inválido", async () => {
     const sender = await createUser("invalid@test.com");
 
@@ -73,7 +73,7 @@ it("deve lançar erro se receiverId for inválido", async () => {
     ).rejects.toBeInstanceOf(InvalidIdError);
 });
 
-// FALHA AO ENVIAR SE MENSAGEM ESTIVER VAZIA
+
 it("deve lançar erro se faltar texto", async () => {
     const sender = await createUser("missing@test.com");
     const receiver = await createUser("missing2@test.com");
@@ -87,7 +87,7 @@ it("deve lançar erro se faltar texto", async () => {
     ).rejects.toBeInstanceOf(CreateMessageError);
 });
 
-// BUSCA TODAS AS MENSAGENS DE UMA CONVERSA
+
 it("deve buscar mensagens mais recentes primeiro com paginação", async () => {
     const sender = await createUser("order@test.com");
     const receiver = await createUser("order2@test.com");
@@ -125,7 +125,7 @@ it("deve buscar mensagens mais recentes primeiro com paginação", async () => {
     expect(result.totalPages).toBe(1);
 });
 
-// FALHA AO BUSCAR MENSAGENS SE O ID DA CONVERSA FOR INVÁLIDO
+
 it("deve lançar erro se conversationId for inválido", async () => {
     await expect(
         MessageService.getMessagesByConversation("abc")

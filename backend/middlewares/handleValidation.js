@@ -12,7 +12,7 @@ const validate = (req, res, next) => {
     errors.array().map((err) => extractedErros.push(err.msg));
 
     return res.status(422).json({
-        errors: extractedErros,
+        details: extractedErros,
     });
 };
 

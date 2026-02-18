@@ -4,7 +4,7 @@ const User = require("../models/User");
 const Conversation = require("../models/Conversation");
 const { hashPassword } = require("../utils/hash");
 
-describe("Conversation Controller - getUserConversations", () => {
+describe("Conversation Controller", () => {
 
     async function createUserAndLogin(email) {
         await User.create({
@@ -28,7 +28,7 @@ describe("Conversation Controller - getUserConversations", () => {
         });
     }
 
-    // RETORNA TODAS AS CONVERSAS DO USUÁRIO
+
     it("deve retornar todas as conversas do usuário logado", async () => {
         const token = await createUserAndLogin("user1@test.com");
 
@@ -66,7 +66,7 @@ describe("Conversation Controller - getUserConversations", () => {
         });
     });
 
-    // RETORNA ARRAY DE CONVERSAS VAZIO
+
     it("deve retornar array vazio quando o usuário não tem conversas", async () => {
         const token = await createUserAndLogin("semconversa@test.com");
 
@@ -76,5 +76,57 @@ describe("Conversation Controller - getUserConversations", () => {
 
         expect(res.status).toBe(200);
         expect(res.body).toEqual([]);
+    });
+
+
+    it("deve retornar a conversa entre dois usuários", async () => {
+        const token = await createUserAndLogin("userA@test.com");
+
+        const userA = await User.findOne({ email: "userA@test.com" });
+        const userB = await createUser("userB@test.com");
+
+        const conversation = await Conversation.create({
+            senderId: userA._id,
+            receiverId: userB._id
+        });
+
+        const res = await request(app)
+            .get(`/api/conversations/${userB._id}`)
+            .set("Authorization", `Bearer ${token}`);
+
+        expect(res.status).toBe(200);
+        expect(res.body._id).toBe(conversation._id.toString());
+        expect(
+            res.body.senderId._id === userA._id.toString() ||
+            res.body.receiverId._id === userA._id.toString()
+        ).toBe(true);
+    });
+
+
+    it("deve retornar null quando não existir conversa entre os usuários", async () => {
+        const token = await createUserAndLogin("userC@test.com");
+
+        const userC = await User.findOne({ email: "userC@test.com" });
+        const userD = await createUser("userD@test.com");
+
+        const res = await request(app)
+            .get(`/api/conversations/${userD._id}`)
+            .set("Authorization", `Bearer ${token}`);
+
+        expect(res.status).toBe(200);
+        expect(res.body).toBeNull();
+    });
+
+
+    it("deve retornar erro 400 se o ID for inválido", async () => {
+        const token = await createUserAndLogin("userE@test.com");
+
+        const res = await request(app)
+            .get("/api/conversations/id-invalido")
+            .set("Authorization", `Bearer ${token}`);
+
+        expect(res.status).toBe(400);
+        expect(res.body.status).toBe("error");
+        expect(res.body.message).toMatch(/ID inválido/i);
     });
 });

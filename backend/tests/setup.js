@@ -1,15 +1,14 @@
-// tests/setup.js
 const mongoose = require("mongoose");
-const conn = require("../config/db"); // ou ../db.js, dependendo da pasta
+const conn = require("../config/db");
 
 beforeAll(async () => {
-  await conn(); // conecta usando db.js
+  await conn();
 });
 
 afterEach(async () => {
-  await require("mongoose").connection.db.dropDatabase(); // limpa banco de teste
+  await mongoose.connection.db.dropDatabase();
 });
 
 afterAll(async () => {
-  await mongoose.connection.close(); // ou mongoose.disconnect()
+  await mongoose.connection.close();
 });
