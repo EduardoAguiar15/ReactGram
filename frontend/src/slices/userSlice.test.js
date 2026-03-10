@@ -1,4 +1,4 @@
-import reducer, { getAllUsers, getUserDetails, updateProfile } from "./userSlice";
+import reducer, { getAllUsers, getUserDetails, updateProfile, resetMessage } from "./userSlice";
 
 describe("userSlice", () => {
     it("deve retornar o estado inicial", () => {
@@ -14,6 +14,20 @@ describe("userSlice", () => {
         });
     });
 
+    it("deve resetar a mensagem", () => {
+        const initialState = {
+            user: {},
+            users: [],
+            error: null,
+            success: false,
+            loading: false,
+            message: "Mensagem qualquer"
+        };
+
+        const state = reducer(initialState, resetMessage());
+
+        expect(state.message).toBeNull();
+    });
 
     it("deve salvar os detalhes do usuário", () => {
         const userData = { _id: "1", name: "Usuário" };
@@ -29,7 +43,6 @@ describe("userSlice", () => {
         expect(state.success).toBe(true);
         expect(state.loading).toBe(false);
     });
-
 
     it("deve salvar a lista de usuários", () => {
         const users = [
@@ -48,7 +61,6 @@ describe("userSlice", () => {
         expect(state.success).toBe(true);
         expect(state.loading).toBe(false);
     });
-
 
     it("deve atualizar os dados do perfil do usuário corretamente", () => {
         const initialState = {
@@ -81,7 +93,6 @@ describe("userSlice", () => {
         expect(state.message).toBe("Usuário atualizado com sucesso!");
     });
 
-
     it("deve lidar com erro ao atualizar perfil", () => {
         const initialState = {
             user: { _id: "1", name: "Usuário" },
@@ -102,5 +113,66 @@ describe("userSlice", () => {
         expect(state.loading).toBe(false);
         expect(state.error).toBe("Erro ao atualizar");
         expect(state.user).toEqual({});
+    });
+
+    it("deve salvar os dados do profile", () => {
+        const user = { _id: "1", name: "Usuário" };
+
+        const action = {
+            type: "user/profile/fulfilled",
+            payload: user,
+        };
+
+        const state = reducer(undefined, action);
+
+        expect(state.loading).toBe(false);
+        expect(state.success).toBe(true);
+        expect(state.user).toEqual(user);
+    });
+
+    it("deve ativar loading no profile.pending", () => {
+        const action = { type: "user/profile/pending" };
+
+        const state = reducer(undefined, action);
+
+        expect(state.loading).toBe(true);
+        expect(state.error).toBe(false);
+    });
+
+    it("deve ativar loading no updateProfile.pending", () => {
+        const action = { type: updateProfile.pending.type };
+
+        const state = reducer(undefined, action);
+
+        expect(state.loading).toBe(true);
+        expect(state.error).toBe(false);
+    });
+
+    it("deve ativar loading no getUserDetails.pending", () => {
+        const action = { type: getUserDetails.pending.type };
+
+        const state = reducer(undefined, action);
+
+        expect(state.loading).toBe(true);
+    });
+
+    it("deve ativar loading no getAllUsers.pending", () => {
+        const action = { type: getAllUsers.pending.type };
+
+        const state = reducer(undefined, action);
+
+        expect(state.loading).toBe(true);
+    });
+
+    it("deve tratar erro no getAllUsers.rejected", () => {
+        const action = {
+            type: getAllUsers.rejected.type,
+            payload: "Erro ao buscar usuários",
+        };
+
+        const state = reducer(undefined, action);
+
+        expect(state.loading).toBe(false);
+        expect(state.error).toBe("Erro ao buscar usuários");
     });
 });

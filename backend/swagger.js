@@ -5,7 +5,7 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "API do Meu Projeto",
+      title: "API de Rede Social",
       version: "1.0.0",
       description: "API de rede social para compartilhamento de fotos",
     },

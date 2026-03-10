@@ -1,6 +1,4 @@
-// app.js
 const { swaggerUi, swaggerSpec } = require("./swagger");
-//const cleanLikes = require('./utils/cleanLikes.js');
 require("dotenv").config();
 
 const express = require("express");

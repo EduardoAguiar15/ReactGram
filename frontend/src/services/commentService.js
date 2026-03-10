@@ -5,13 +5,13 @@ const likeComment = async (commentId, token) => {
 
   try {
     const response = await fetch(`${api}/comments/${commentId}/like`, config);
+    const res = await response.json();
 
     if (!response.ok) {
-      throw new Error("Erro ao curtir comentário");
+      return { errors: res.details || [res.message || "Erro ao curtir comentário"] };
     }
 
-    const data = await response.json();
-    return data;
+    return res;
   } catch (error) {
     console.error("Erro ao curtir comentário:", error);
     return { errors: ["Erro ao conectar ao servidor."] };
@@ -23,13 +23,13 @@ const comment = async (photoId, data, token) => {
 
   try {
     const response = await fetch(`${api}/comments/${photoId}/`, config);
+    const res = await response.json();
 
     if (!response.ok) {
-      throw new Error("Erro ao enviar comentário");
+      return { errors: res.details || [res.message || "Erro ao enviar comentário"] };
     }
 
-    const data = await response.json();
-    return data;
+    return res;
   } catch (error) {
     console.error("Erro ao enviar comentário:", error);
     return { errors: ["Erro ao enviar comentário"] };
@@ -41,13 +41,13 @@ const getAllComments = async (token) => {
 
   try {
     const response = await fetch(`${api}/comments/`, config);
+    const res = await response.json();
 
     if (!response.ok) {
-      throw new Error("Erro ao buscar comentários");
+      return { errors: res.details || [res.message || "Erro ao buscar comentários"] };
     }
 
-    const data = await response.json();
-    return data;
+    return res;
   } catch (error) {
     console.error("Erro ao buscar comentários:", error);
     return { errors: ["Erro ao buscar comentários"] };
@@ -59,13 +59,13 @@ const getCommentsByPhotoId = async (photoId, token) => {
 
   try {
     const response = await fetch(`${api}/comments/${photoId}`, config);
+    const res = await response.json();
 
     if (!response.ok) {
-      throw new Error("Erro ao buscar comentário");
+      return { errors: res.details || [res.message || "Erro ao buscar comentário"] };
     }
 
-    const data = await response.json();
-    return data;
+    return res;
   } catch (error) {
     console.error("Erro ao buscar comentário:", error);
     return { errors: ["Erro ao buscar comentário"] };

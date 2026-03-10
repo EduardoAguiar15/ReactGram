@@ -1,6 +1,5 @@
 import { api, requestConfig } from '../utils/config';
 
-// PUBLISH PHOTO
 const publishPhoto = async (data, token) => {
 
     const config = requestConfig("POST", data, token, true);
@@ -21,7 +20,6 @@ const publishPhoto = async (data, token) => {
     }
 };
 
-// GET USER PHOTOS
 const getUserPhotos = async (id, token) => {
     const config = requestConfig("GET", null, token);
 
@@ -40,7 +38,6 @@ const getUserPhotos = async (id, token) => {
     }
 };
 
-// DELETE PHOTO
 const deletePhoto = async (id, token) => {
 
     const config = requestConfig("DELETE", null, token);
@@ -60,7 +57,6 @@ const deletePhoto = async (id, token) => {
     }
 };
 
-// UPDATE PHOTO
 const updatePhoto = async (data, id, token) => {
     const config = requestConfig("PUT", data, token)
 
@@ -80,7 +76,6 @@ const updatePhoto = async (data, id, token) => {
     }
 }
 
-// GET PHOTO BY ID
 const getPhoto = async (id, token) => {
     const config = requestConfig("GET", null, token);
 
@@ -100,7 +95,6 @@ const getPhoto = async (id, token) => {
     }
 }
 
-// LIKE PHOTO
 const like = async (id, token) => {
 
     const config = requestConfig("PUT", null, token)
@@ -120,7 +114,6 @@ const like = async (id, token) => {
     };
 }
 
-// GET ALL PHOTOS
 const getPhotos = async (token) => {
     const config = requestConfig("GET", null, token);
 
@@ -140,8 +133,6 @@ const getPhotos = async (token) => {
     }
 };
 
-
-// SEARCH PHOTO BY TITLE
 const searchPhotos = async (Query, token) => {
 
     const config = requestConfig("GET", null, token);
