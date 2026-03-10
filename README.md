@@ -58,7 +58,7 @@ Sistema de rede social que permite aos usuários publicar fotos, curtir posts e 
   
 - **Documentação da API com Swagger**
 
-  ## ⚙️ Como rodar:
+## ⚙️ Como rodar:
 
 - **Clonar o repositório:**
 ```bash
