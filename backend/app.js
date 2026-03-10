@@ -15,8 +15,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 
-// cleanLikes();
-
 // Upload directory
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
