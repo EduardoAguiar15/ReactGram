@@ -138,7 +138,7 @@ const Profile = () => {
                         <img className="w-[120px] h-[120px] rounded-full mr-8 object-cover cursor-pointer" src={`${uploads}/users/${user.profileImage}`} alt={user.name} onClick={() => setZoomImage(`${uploads}/users/${user.profileImage}`)} />
                     )}
                     <div className="flex flex-col gap-2">
-                        <h2>{user?.name}</h2>
+                        <h2 style={{ fontFamily: "Mouse Memoirs" }} className="font-mouse text-4xl tracking-wider">{user?.name}</h2>
                         <p>{user?.bio}</p>
                     </div>
                 </div>
@@ -203,7 +203,7 @@ const Profile = () => {
                                                 <BsFillEyeFill className="cursor-pointer" />
                                             </Link>
                                             <BsPencilFill className="cursor-pointer" onClick={() => handleEdit(photo)} />
-                                            <BsXLg className="cursor-pointer" onClick={() => handleDelete(photo._id)} />
+                                            <BsXLg data-testid="delete-photo" className="cursor-pointer" onClick={() => handleDelete(photo._id)} />
                                         </div>
                                     ) : (<Link className="max-w-[80px] text-center block bg-[#0094f6] opacity-80 rounded px-1.5 py-2 font-light cursor-pointer mt-2 mb-8 mx-0" to={`/photos/${photo._id}`}>Ver Mais</Link>)}
                                 </div>

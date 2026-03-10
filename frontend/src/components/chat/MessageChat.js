@@ -42,6 +42,7 @@ const MessageChat = ({ messages, currentUser, selectedUser, newMessage, setNewMe
             </div>
 
             <div
+                data-testid="chat-scroll-container"
                 ref={chatRef}
                 onScroll={handleScroll}
                 className="p-4 bg-gray-800 rounded-lg flex flex-col h-[350px] overflow-y-auto scrollbar scrollbar-thumb-scroll-thumb scrollbar-track-scroll-track bg-cover"
@@ -66,7 +67,7 @@ const MessageChat = ({ messages, currentUser, selectedUser, newMessage, setNewMe
                             )}
                             <div className={`pt-1 pb-1 pl-2 pr-2 my-1 rounded-lg max-w-[100%] ${isCurrentUser ? "bg-blue-600 self-end text-right" : "bg-gray-700 self-start text-left"}`}>
                                 {!isCurrentUser && <p className="text-left text-lime-600 text-[0.70rem] mb-[0.15rem]">{selectedUser.name}</p>}
-                                <p className="text-white text-[0.8rem] text-justify break-words">{msg.text}</p>
+                                <p className="text-white text-[0.9rem] text-justify leading-6 break-words">{msg.text}</p>
                                 <small className="text-gray-400 text-[0.7rem] flex justify-end">{new Date(msg.createdAt).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}</small>
                             </div>
                         </React.Fragment>
@@ -82,7 +83,7 @@ const MessageChat = ({ messages, currentUser, selectedUser, newMessage, setNewMe
                     onChange={setNewMessage}
                     placeholder="Mensagem..."
                     onEnter={handleSendMessage}
-                    inputClassName="w-full bg-gray-700 text-white px-3 py-2 rounded-lg outline-none m-0"
+                    inputClassName="w-full bg-gray-700 text-white px-3 py-2 pr-12 rounded-lg outline-none m-0"
                     wrapperClassName="w-[210px]"
                     buttonClassName="right-1 top-[50%]"
                     pickerWidth={287}

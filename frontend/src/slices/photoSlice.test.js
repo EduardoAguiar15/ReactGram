@@ -1,6 +1,5 @@
 import reducer, { resetMessage, publishPhoto, deletePhoto, updatePhoto, getPhotos, getUserPhotos, searchPhotos, getPhoto, like } from "./photoSlice";
 
-
 describe("photoSlice", () => {
     it("deve retornar o estado inicial", () => {
         const state = reducer(undefined, { type: "@@INIT" });
@@ -249,4 +248,96 @@ describe("photoSlice", () => {
         expect(state.photo.likes).not.toContain("user123");
         expect(state.photos[0].likes).not.toContain("user123");
     });
+
+    it("deve tratar erro no publishPhoto.rejected", () => {
+        const action = {
+            type: publishPhoto.rejected.type,
+            payload: "Erro ao publicar",
+        };
+
+        const state = reducer(undefined, action);
+
+        expect(state.loading).toBe(false);
+        expect(state.error).toBe("Erro ao publicar");
+    });
+
+    it("deve tratar erro no like.rejected", () => {
+        const action = {
+            type: like.rejected.type,
+            payload: "Erro ao curtir",
+        };
+
+        const state = reducer(undefined, action);
+
+        expect(state.loading).toBe(false);
+        expect(state.error).toBe("Erro ao curtir");
+    });
+
+    it("deve tratar erro no deletePhoto.rejected", () => {
+        const action = {
+            type: deletePhoto.rejected.type,
+            payload: "Erro ao deletar",
+        };
+
+        const state = reducer(undefined, action);
+
+        expect(state.error).toBe("Erro ao deletar");
+    });
+
+    it("deve tratar erro no updatePhoto.rejected", () => {
+        const action = {
+            type: updatePhoto.rejected.type,
+            payload: "Erro ao atualizar",
+        };
+
+        const state = reducer(undefined, action);
+
+        expect(state.error).toBe("Erro ao atualizar");
+    });
+
+    it("deve tratar erro no getPhoto.rejected", () => {
+        const action = {
+            type: getPhoto.rejected.type,
+            payload: "Erro ao buscar foto",
+        };
+
+        const state = reducer(undefined, action);
+
+        expect(state.loading).toBe(false);
+        expect(state.error).toBe("Erro ao buscar foto");
+        expect(state.photo).toEqual([]);
+    });
+
+    it("deve tratar erro no searchPhotos.rejected", () => {
+        const action = {
+            type: searchPhotos.rejected.type,
+            payload: "Erro na busca",
+        };
+
+        const state = reducer(undefined, action);
+
+        expect(state.error).toBe("Erro na busca");
+        expect(state.photos).toEqual([]);
+    });
+
+    it("deve setar loading no getUserPhotos.pending", () => {
+        const action = {
+            type: getUserPhotos.pending.type,
+        };
+
+        const state = reducer(undefined, action);
+
+        expect(state.loading).toBe(true);
+        expect(state.error).toBe(false);
+    });
+
+    it("deve setar loading no publishPhoto.pending", () => {
+        const action = { type: publishPhoto.pending.type };
+
+        const state = reducer(undefined, action);
+
+        expect(state.loading).toBe(true);
+        expect(state.error).toBe(false);
+    });
+
 });

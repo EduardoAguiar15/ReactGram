@@ -2,6 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
+html, .EmojiPickerReact .epr-body{
+  scrollbar-color: #9F9F9F #2c2c2c;
+}
+
+html::-webkit-scrollbar, 
+.EmojiPickerReact .epr-body::-webkit-scrollbar{
+  width: 10px;
+}
+
+html::-webkit-scrollbar-track,
+.EmojiPickerReact .epr-body::-webkit-scrollbar-track{
+  background: #2c2c2c;
+}
+
+html::-webkit-scrollbar-thumb,
+.EmojiPickerReact .epr-body::-webkit-scrollbar-thumb {
+  background-color: #9F9F9F;
+  border-radius: 8px;
+  border: 3px solid #2c2c2c;
+}
+
+html::-webkit-scrollbar-thumb:hover,
+.EmojiPickerReact .epr-body::-webkit-scrollbar-thumb:hover {
+  background-color: #a8a8a8;
+}
+
 body {
   font-family: "Roboto", sans-serif;
   margin: 0;
@@ -9,8 +35,6 @@ body {
   box-sizing: border-box;
   background-color: #121212;
   color: #fafafa;
-  width: 100%;
-  height: 100%;
 }
 
 a {
@@ -94,42 +118,31 @@ input[type="submit"]:hover {
   display: none;
 }
 
-.EmojiPickerReact .epr-body::-webkit-scrollbar {
-  width: 10px;
-}
-  
-.EmojiPickerReact .epr-body::-webkit-scrollbar-track {
-  background: #2c2c2c;
-  border-radius: 8px;
-}
-  
-.EmojiPickerReact .epr-body::-webkit-scrollbar-thumb {
-  background-color: #9F9F9F;
-  border-radius: 8px;
-  border: 3px solid #9F9F9F;
-}
-  
-.EmojiPickerReact .epr-body::-webkit-scrollbar-thumb:hover {
-  background-color: #a8a8a8;
+.EmojiPickerReact .epr-body{
+  scrollbar-width: thin;
 }
 
-/* Emojis do grid */
+.EmojiPickerReact .epr-body::-webkit-scrollbar-track {
+  border-radius: 8px;
+}
+
+.EmojiPickerReact .epr-body::-webkit-scrollbar-thumb {
+  border: 3px solid #9F9F9F;
+}
+
 .EmojiPickerReact .epr-emoji {
   font-size: 16px !important;
   padding: 4px !important;
 }
 
-/* Títulos */
 .EmojiPickerReact h2 {
   font-size: 0.8rem;
 }
 
-/* Ícones das categorias */
 .EmojiPickerReact .epr-category-nav button {
   font-size: 12px;
 }
 
-/* Remove a barra de categorias do EmojiPickerReact */
 .EmojiPickerReact .epr-header {
   display: none;
 }
@@ -141,4 +154,12 @@ input[type="submit"]:hover {
 .emoji-large {
   width: 18px;
   height: 18px;
+}
+
+@font-face {
+  font-family: "Mouse Memoirs";
+  src: url("./assets/fonts/MouseMemoirs-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
